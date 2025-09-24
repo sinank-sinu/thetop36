@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/draw/run",
+      "schedule": "0 12 * * *"
+    }
+  ],
+  "functions": {
+    "src/app/api/draw/run/route.ts": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "CRON_JOB_SECRET": "@cron-job-secret"
+  }
+}
