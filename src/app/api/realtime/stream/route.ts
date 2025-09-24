@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+// import { NextRequest } from 'next/server'; // Unused import
 import { addClient } from '@/lib/realtime';
 
 export const dynamic = 'force-dynamic';

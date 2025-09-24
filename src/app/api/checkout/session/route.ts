@@ -27,7 +27,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (!parsed.success) {
       return NextResponse.json({ 
         error: 'Invalid email format',
-        details: parsed.error.errors 
+        details: parsed.error.issues 
       }, { status: 400 });
     }
 
