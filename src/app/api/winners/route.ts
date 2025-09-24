@@ -5,7 +5,7 @@ import { Winner } from '@/models/Winner';
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   await dbConnect();
   
   const winners = await Winner.find({}).sort({ drawDate: -1 }).limit(100).lean();

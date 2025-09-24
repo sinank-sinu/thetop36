@@ -3,7 +3,7 @@ import { addClient } from '@/lib/realtime';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   const stream = new ReadableStream({
     start(controller) {
       const encoder = new TextEncoder();

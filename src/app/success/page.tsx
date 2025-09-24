@@ -9,7 +9,7 @@ export default function SuccessPage() {
   const sessionId = params.get('session_id');
   const [status, setStatus] = useState<'pending' | 'ok' | 'unpaid' | 'error'>('pending');
   const [message, setMessage] = useState('Confirming payment…');
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ email: string; tickets: number; referrals: number } | null>(null);
 
   useEffect(() => {
     async function confirm() {
@@ -32,10 +32,12 @@ export default function SuccessPage() {
           setStatus('unpaid');
           setMessage('Payment not completed. No ticket was added.');
         }
-      } catch (e: any) {
+            } catch (e: unknown) {
         console.error('Payment confirmation error:', e);
         setStatus('error');
-        setMessage(e?.response?.data?.error || 'Error confirming payment');
+        setMessage(e && typeof e === 'object' && 'response' in e ? 
+          (e as { response?: { data?: { error?: string } } }).response?.data?.error || 'Error confirming payment' : 
+          'Error confirming payment');
       }
     }
     confirm();
@@ -122,7 +124,7 @@ export default function SuccessPage() {
           )}
 
           <div className="space-y-4">
-            <h3 className="text-xl font-serif text-[--teal]">What's Next?</h3>
+            <h3 className="text-xl font-serif text-[--teal]">What&apos;s Next?</h3>
             <div className="grid md:grid-cols-3 gap-4">
               <Link href="/leaderboard" className="btn-primary group">
                 <div className="flex items-center justify-center gap-2">

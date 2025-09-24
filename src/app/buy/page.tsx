@@ -58,18 +58,28 @@ export default function BuyPage() {
       } else {
         throw new Error('Failed to create checkout session');
       }
-    } catch (e: any) {
+            } catch (e: unknown) {
       console.error('Checkout error:', e);
       
       // Enhanced error handling
-      if (e.response?.status === 400) {
-        setError(e.response.data.error || 'Invalid email format');
-      } else if (e.response?.status === 500) {
-        setError('Payment service temporarily unavailable. Please try again later.');
-      } else if (e.code === 'NETWORK_ERROR' || !e.response) {
-        setError('Network error. Please check your connection and try again.');
+      if (e && typeof e === 'object' && 'response' in e) {
+        const error = e as { response?: { status?: number; data?: { error?: string } } };
+        if (error.response?.status === 400) {
+          setError(error.response.data?.error || 'Invalid email format');
+        } else if (error.response?.status === 500) {
+          setError('Payment service temporarily unavailable. Please try again later.');
+        } else {
+          setError(error.response?.data?.error || 'Checkout error. Please try again.');
+        }
+      } else if (e && typeof e === 'object' && 'code' in e) {
+        const error = e as { code?: string };
+        if (error.code === 'NETWORK_ERROR') {
+          setError('Network error. Please check your connection and try again.');
+        } else {
+          setError('Checkout error. Please try again.');
+        }
       } else {
-        setError(e.response?.data?.error || 'Checkout error. Please try again.');
+        setError('Checkout error. Please try again.');
       }
     } finally {
       setLoading(false);

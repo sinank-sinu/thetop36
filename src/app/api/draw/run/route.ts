@@ -85,12 +85,12 @@ export async function POST(req: NextRequest) {
     const prize = 'Daily Micro Prize';
     const drawDate = new Date();
 
-    // Create winner record
-    const winner = await Winner.create({ 
-      email: selectedUser.email, 
-      prize, 
-      drawDate 
-    });
+            // Create winner record
+            await Winner.create({ 
+              email: selectedUser.email, 
+              prize, 
+              drawDate 
+            });
 
     // Update last draw date
     lastDrawDate = today;

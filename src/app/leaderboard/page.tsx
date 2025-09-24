@@ -37,8 +37,8 @@ export default function LeaderboardPage() {
 
   const users = data?.users || [];
   const totalUsers = users.length;
-  const totalTickets = users.reduce((sum: number, user: any) => sum + user.tickets, 0);
-  const totalReferrals = users.reduce((sum: number, user: any) => sum + user.referrals, 0);
+  const totalTickets = users.reduce((sum: number, user: { tickets: number }) => sum + user.tickets, 0);
+  const totalReferrals = users.reduce((sum: number, user: { referrals: number }) => sum + user.referrals, 0);
 
   return (
     <div className="min-h-screen py-20">
@@ -48,7 +48,7 @@ export default function LeaderboardPage() {
           <h1 className="text-5xl md:text-6xl font-serif text-[--teal] mb-4">Leaderboard</h1>
           <div className="w-24 h-1 bg-gradient-to-r from-[--teal] to-[--gold] rounded-full mx-auto mb-6"></div>
           <p className="text-xl text-[--muted] max-w-2xl mx-auto">
-            Real-time rankings of our community members. See who's leading the pack!
+            Real-time rankings of our community members. See who&apos;s leading the pack!
           </p>
         </div>
 
@@ -133,7 +133,7 @@ export default function LeaderboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((user: any, index: number) => {
+                  {users.map((user: { email: string; tickets: number; referrals: number; totalScore: number }, index: number) => {
                     const rank = index + 1;
                     const totalScore = user.tickets + user.referrals;
                     const isTopThree = rank <= 3;

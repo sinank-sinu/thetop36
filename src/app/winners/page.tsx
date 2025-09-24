@@ -37,7 +37,7 @@ export default function WinnersPage() {
 
   const winners = data?.winners || [];
   const totalWinners = winners.length;
-  const todayWinners = winners.filter((w: any) => {
+  const todayWinners = winners.filter((w: { drawDate: string }) => {
     const today = new Date();
     const winnerDate = new Date(w.drawDate);
     return winnerDate.toDateString() === today.toDateString();
@@ -51,7 +51,7 @@ export default function WinnersPage() {
           <h1 className="text-5xl md:text-6xl font-serif text-[--teal] mb-4">Daily Winners</h1>
           <div className="w-24 h-1 bg-gradient-to-r from-[--teal] to-[--gold] rounded-full mx-auto mb-6"></div>
           <p className="text-xl text-[--muted] max-w-2xl mx-auto">
-            Congratulations to our daily draw winners! Check back daily to see who's winning our micro prizes.
+            Congratulations to our daily draw winners! Check back daily to see who&apos;s winning our micro prizes.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export default function WinnersPage() {
               </svg>
             </div>
             <div className="text-3xl font-bold text-[--teal] mb-2">{todayWinners}</div>
-            <div className="text-sm text-[--muted]">Today's Winners</div>
+            <div className="text-sm text-[--muted]">Today&apos;s Winners</div>
           </div>
           
           <div className="card p-6 text-center">
@@ -125,7 +125,7 @@ export default function WinnersPage() {
             </div>
           ) : (
             <div className="divide-y divide-[--gold]/20">
-              {winners.map((winner: any, idx: number) => {
+              {winners.map((winner: { email: string; prize: string; drawDate: string }, idx: number) => {
                 const isRecent = idx < 3;
                 const drawDate = new Date(winner.drawDate);
                 const isToday = drawDate.toDateString() === new Date().toDateString();

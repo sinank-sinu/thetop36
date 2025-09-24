@@ -93,8 +93,8 @@ export async function POST(req: NextRequest) {
       processed: false 
     });
     
-  } catch (e: any) {
+          } catch (e: unknown) {
     console.error('Confirm error:', e);
-    return NextResponse.json({ error: e.message || 'Error' }, { status: 500 });
+    return NextResponse.json({ error: e instanceof Error ? e.message : 'Error' }, { status: 500 });
   }
 }
