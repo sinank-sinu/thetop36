@@ -56,7 +56,7 @@ export function verifySession(token: string): JWTPayload | null {
 
 export async function getAuthedUser() {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get('session')?.value;
     
     if (!token) {

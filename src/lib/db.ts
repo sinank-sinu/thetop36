@@ -27,7 +27,7 @@ if (!cached) {
 export async function dbConnect() {
   // Return existing connection if available and recent
   if (cached!.conn && cached!.lastConnected) {
-    const timeSinceLastConnection = Date.now() - cached.lastConnected.getTime();
+    const timeSinceLastConnection = Date.now() - cached!.lastConnected.getTime();
     // Reuse connection if it's less than 5 minutes old
     if (timeSinceLastConnection < 5 * 60 * 1000) {
       return cached!.conn;
